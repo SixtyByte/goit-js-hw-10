@@ -14,13 +14,16 @@ form.addEventListener(`input`, debounce(onSerch,DEBOUNCE_DELAY) )
 
 function onSerch(){
 const serchInput=form.value.trim();
-if (serchInput==""){clearMarkup()}
-else{fetchCountries(serchInput).then(data=>createCountryInfo(data));
+if (serchInput==""){clearMarkupAll()}
+fetchCountries(serchInput).then(data=>
+{if(data.length===1){createCountryInfo(data); listOfCoutrys.innerHTML=``}
+else if(data.length>=2 && data.length<=10){createList(data);countryInfo.innerHTML = '';}});
 
 
 }
 
-function clearMarkup(){ countryInfo.innerHTML = ''; listOfCoutrys.innerHTML=``}
+
+function clearMarkupAll(){ countryInfo.innerHTML = ''; listOfCoutrys.innerHTML=``}
 
 function createCountryInfo(arr){ 
 const markup=arr.map(item=>`<ul style="list-style-type: none">
@@ -33,4 +36,4 @@ const markup=arr.map(item=>`<ul style="list-style-type: none">
 countryInfo.innerHTML =markup 
 }
 function createList (arr){const listMarkup=arr.map(item=>`<li><img src="${item.flags.svg}" alt="" height =10px,width=10px>${item.name}</li>`).join(``);
-listOfCoutrys.innerHTML=listMarkup}
+listOfCoutrys.innerHTML=listMarkup;}
