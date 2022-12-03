@@ -9,4 +9,3 @@ function fetchCountries(name){const base_url=`http://restcountries.com/v2/name/`
 }).catch(err=>console.error(err))
 
 }
-fetchCountries()

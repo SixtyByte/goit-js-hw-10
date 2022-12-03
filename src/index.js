@@ -1,6 +1,6 @@
 import debounce from 'lodash.debounce';
 import './css/styles.css';
-import Notiflix from 'notiflix';
+import {Notify} from 'notiflix';
 
 import fetchCountries from './fetchCountries.js';
 const form=document.querySelector(`#search-box`)
@@ -17,7 +17,8 @@ const serchInput=form.value.trim();
 if (serchInput==""){clearMarkupAll()}
 fetchCountries(serchInput).then(data=>
 {if(data.length===1){createCountryInfo(data); listOfCoutrys.innerHTML=``}
-else if(data.length>=2 && data.length<=10){createList(data);countryInfo.innerHTML = '';}});
+else if(data.length>=2 && data.length<=10){createList(data);countryInfo.innerHTML = '';}
+else if (data.length>10){Notify.failure(`Too many matches found. Please enter a more specific name.`)}});
 
 
 }
@@ -26,7 +27,7 @@ else if(data.length>=2 && data.length<=10){createList(data);countryInfo.innerHTM
 function clearMarkupAll(){ countryInfo.innerHTML = ''; listOfCoutrys.innerHTML=``}
 
 function createCountryInfo(arr){ 
-const markup=arr.map(item=>`<ul style="list-style-type: none">
+const markup=arr.map(item=>`<ul class="country-info-list" style="list-style-type: none">
 <li><img src="${item.flags.svg}" alt="flag" height =50px,width=50px><h1> ${item.name}</h1>
 <h2><b>Capital:</b>${item.capital}</h2>
 <h2><b>Population:</b>${item.population}</h2>
@@ -35,5 +36,5 @@ const markup=arr.map(item=>`<ul style="list-style-type: none">
 </ul>`).join('');
 countryInfo.innerHTML =markup 
 }
-function createList (arr){const listMarkup=arr.map(item=>`<li><img src="${item.flags.svg}" alt="" height =10px,width=10px>${item.name}</li>`).join(``);
+function createList (arr){const listMarkup=arr.map(item=>`<li class="country-result"><img src="${item.flags.svg}" alt="" height =10px,width=10px>${item.name}</li>`).join(``);
 listOfCoutrys.innerHTML=listMarkup;}
