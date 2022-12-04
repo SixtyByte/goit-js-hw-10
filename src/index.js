@@ -16,9 +16,11 @@ function onSerch(){
 const serchInput=form.value.trim();
 if (serchInput==""){clearMarkupAll()}
 fetchCountries(serchInput).then(data=>
-{if(data.length===1){createCountryInfo(data); listOfCoutrys.innerHTML=``}
+{if(data==undefined){console.log("Немає такої країни ")}
+else if(data.length===1){createCountryInfo(data); listOfCoutrys.innerHTML=``}
 else if(data.length>=2 && data.length<=10){createList(data);countryInfo.innerHTML = '';}
-else if (data.length>10){Notify.failure(`Too many matches found. Please enter a more specific name.`)}});
+else if (data.length>10){Notify.failure(`Too many matches found. Please enter a more specific name.`)}
+});
 
 
 }
